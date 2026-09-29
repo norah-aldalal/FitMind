@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0fdf4;
+      margin: 0;
+    }
+
+    .flexContainer{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      border-radius: 20px;
+      padding: 30px;
+      width: 400px;
+      background:  #dcfce7;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #14532d;;
+    }
+
+    .user-type {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .form {
+      display: none;
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+      color:#14532d;
+   
+    }
+    .user-type label{
+        display: inline;
+    }
+
+    input[type="text"], input[type="email"], input[type="password"]/*, input[type="file"] */{
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .topics {
+      margin-top: 10px;
+    }
+
+
+    button,input[type="submit"] {
+      margin-top: 15px;
+      width: 100%;
+      padding: 10px;
+      background-color:  #22c55e;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    button:hover ,input[type="submit"]:hover{
+      background-color:  #14532d;
+    }
+
+    
+  </style>
+</head>
+<body>
+   <header class="header">
+    <img class="logo" src="Image/Logo3.png" alt="FitMind Logo">
+    <h1>FitMind</h1>
+        
+    
+  </header>   
+ <div class="flexContainer">
+  <div class="container">
+      
+    <h2>Sign Up</h2>
+
+    <!-- User Type Selection -->
+    <div class="user-type">
+      <label><input type="radio" name="userType" value="learner"> Learner</label>
+      <label><input type="radio" name="userType" value="educator"> Educator</label>
+    </div>
+
+    
+   <!-- Learner Form -->
+<form id="learnerForm" class="form" method="POST" action="Sign_up.php" enctype="multipart/form-data">
+  <input type="hidden" name="userType" value="learner">
+
+  <label>First Name</label>
+  <input type="text" name="firstName" required>
+
+  <label>Last Name</label>
+  <input type="text" name="lastName" required>
+
+  <label>Profile Image (Optional)</label>
+  <input type="file" name="profileImage" accept="image/*">
+
+  <label>Email</label>
+  <input type="email" name="email" required>
+
+  <label>Password</label>
+  <input type="password" name="password" required>
+  
+  <div id="passwordError" style="color: red; margin-top: 10px;"></div>
+
+
+  <input type="submit" value="Sign Up as Learner">
+</form>
+
+
+<!-- Educator Form -->
+<form id="educatorForm" class="form" method="POST" action="Sign_up.php" enctype="multipart/form-data">
+  <input type="hidden" name="userType" value="educator">
+
+  <label>First Name</label>
+  <input type="text" name="firstName" required>
+
+  <label>Last Name</label>
+  <input type="text" name="lastName" required>
+
+  <label>Profile Image (Optional)</label>
+  <input type="file" name="profileImage" accept="image/*">
+
+  <label>Email</label>
+  <input type="email" name="email" required>
+
+  <label>Password</label>
+  <input type="password" name="password" required>
+  <div id="passwordError2" style="color: red; margin-top: 10px;"></div>
+ 
+
+  <div class="topics">
+    <label>Specialized Topics:</label>
+   
+         <label><input type="checkbox" name="topics[]" value="1"> Nutrition</label>
+         <label><input type="checkbox" name="topics[]" value="2"> Mental Health</label>
+         <label><input type="checkbox" name="topics[]" value="3"> First Aid</label>
+         <label><input type="checkbox" name="topics[]" value="4"> Healthy Habits</label>
+   
+  
+ 
+  </div>
+  
+  
+
+ 
+  <input type="submit" value="Sign Up as Educator">
+</form>
+ 
+  </div>
+ </div>
+
+<footer class="footer">
+    <div>
+      <img src="Image/Logo3.png" alt="FitMind Logo" style="height: 60px; margin-bottom: 10px;">
+      <p>Contact: support@fitmind.com | (555) 123-4567</p>
+      <p>&copy; 2025 FitMind. All rights reserved.</p>
+      
+        <span>Privacy Policy</span> | <span>Terms of Service</span>
+
+    </div>
+  </footer>
+
+  <script>
+    const userTypeRadios = document.querySelectorAll('input[name="userType"]');
+const learnerForm = document.getElementById('learnerForm');
+const educatorForm = document.getElementById('educatorForm');
+
+// Show form based on user selection
+userTypeRadios.forEach(radio => {
+  radio.addEventListener('change', () => {
+    if (radio.value === "learner") {
+      learnerForm.style.display = "block";
+      educatorForm.style.display = "none";
+    } else {
+      educatorForm.style.display = "block";
+      learnerForm.style.display = "none";
+    }
+  });
+});
+
+
+
+////////////////////////////////////////////////validate password
+
+// Function to validate password
+function validatePassword(password) {
+    const minLength = /.{8,}/;
+    const capital   = /[A-Z]/;
+    const small     = /[a-z]/;
+    const special   = /[!@#$%^&*(),.?":{}|<>]/;
+
+    if (!minLength.test(password)) return "Password must be at least 8 characters long.";
+    if (!capital.test(password)) return "Password must contain at least one uppercase letter.";
+    if (!small.test(password)) return "Password must contain at least one lowercase letter.";
+    if (!special.test(password)) return "Password must contain at least one special character.";
+    
+    return ""; // valid
+}
+
+// Educator form submission
+educatorForm.addEventListener('submit', function(event) {
+    const password = this.password.value;
+    const errorDiv = document.getElementById('passwordError2');
+    const errorMsg = validatePassword(password);
+    
+    if (errorMsg !== "") {
+        event.preventDefault(); // stop form submission
+        errorDiv.textContent = errorMsg;
+    } else {
+        errorDiv.textContent = ""; // clear previous errors
+    }
+    
+        // Check if at least one topic is selected
+    const checkedTopics = this.querySelectorAll('input[name="topics[]"]:checked');
+    if (checkedTopics.length === 0) {
+        event.preventDefault();
+        alert ("Please select at least one topic.");
+    } 
+});
+
+// Learner form submission
+learnerForm.addEventListener('submit', function(event) {
+    const password = this.password.value;
+    const errorDiv = document.getElementById('passwordError');
+    const errorMsg = validatePassword(password);
+    
+    if (errorMsg !== "") {
+        event.preventDefault(); // stop form submission
+        errorDiv.textContent = errorMsg;
+    } else {
+        errorDiv.textContent = ""; // clear previous errors
+    }
+});
+
+
+
+
+
+  </script>
+  
+  
+
+</body>
+</html>
